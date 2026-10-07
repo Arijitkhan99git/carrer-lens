@@ -1,5 +1,6 @@
 import { useAtomValue } from "jotai";
 import { useColorScheme } from "react-native";
+
 import { themeAtom } from "../store/theme-store";
 
 export type ColorsType = typeof Colors.light & {
@@ -8,99 +9,181 @@ export type ColorsType = typeof Colors.light & {
 
 export const Colors = {
   light: {
+    // ─────────────────────────────────────────
     // Surfaces
-    background: "#fbf3ebff",
+    // ─────────────────────────────────────────
+
+    background: "#F7F9FF",
     foreground: "#FFFFFF",
-    surface: "#de8864ff",
-    surfaceSecondary: "#FFF2E8",
-    surfaceSubtle: "#F6EFE9",
+
+    surface: "#FFFFFF",
+    surfaceSecondary: "#F4F6FF",
+    surfaceSubtle: "#EEF2FF",
     surfaceHigh: "#FFFFFF",
-    surfaceAccent: "#FFE0CC",
+    surfaceAccent: "#E8EEFF",
+
     card: "#FFFFFF",
     cardElevated: "#FFFFFF",
+
+    // ─────────────────────────────────────────
     // Brand
-    primary: "#FF5A1F",
+    // ─────────────────────────────────────────
+
+    primary: "#3568F5",
     primaryText: "#FFFFFF",
-    orangeGlow: "#FF6A2A",
-    orangeTint: "#c9582fff",
-    brandOrange: "#FF5A1F",
-    brandOrangeGlow: "#FF6A2A",
+
+    blueGlow: "#4D7BFF",
+    blueTint: "#E8EEFF",
+
+    brandBlue: "#3568F5",
+    brandBlueGlow: "#4D7BFF",
+
+    // ─────────────────────────────────────────
     // Text
-    text: "#171717",
-    textSecondary: "#6B6B6B",
-    mutedText: "#6a6867ff",
+    // ─────────────────────────────────────────
+
+    text: "#172554",
+    textSecondary: "#64748B",
+    mutedText: "#94A3B8",
+
+    // ─────────────────────────────────────────
     // Semantic
-    secondary: "#FFF2E8",
-    secondaryText: "#171717",
-    muted: "#ece9e7ff",
+    // ─────────────────────────────────────────
+
+    secondary: "#F1F5FF",
+    secondaryText: "#172554",
+
+    muted: "#EEF2F7",
+
     popover: "#FFFFFF",
-    popoverText: "#171717",
+    popoverText: "#172554",
+
+    // ─────────────────────────────────────────
     // Feedback
-    rating: "#F6B73C",
-    success: "#3FA66B",
+    // ─────────────────────────────────────────
+
+    rating: "#F59E0B",
+
+    success: "#18A874",
     successText: "#FFFFFF",
-    warning: "#E57A28",
+
+    warning: "#F59E0B",
     warningText: "#FFFFFF",
-    danger: "#DC2626",
+
+    danger: "#EF4444",
     dangerText: "#FFFFFF",
+
+    // ─────────────────────────────────────────
     // Borders
-    border: "#F1E5DC",
-    borderAccent: "#FFD2B8",
-    borderFocus: "#FFD2B8",
+    // ─────────────────────────────────────────
+
+    border: "#E5EAF4",
+    borderAccent: "#C9D7FF",
+    borderFocus: "#8FAAFF",
+
+    // ─────────────────────────────────────────
     // Input / Focus
-    input: "#F1E5DC",
-    ring: "#FFD2B8",
+    // ─────────────────────────────────────────
+
+    input: "#F4F6FB",
+    ring: "#8FAAFF",
+
+    // ─────────────────────────────────────────
     // Utility
-    shadow: "rgba(230, 140, 90, 0.08)",
-    buttonShadow: "rgba(255, 90, 31, 0.35)",
+    // ─────────────────────────────────────────
+
+    shadow: "rgba(37, 76, 160, 0.08)",
+    buttonShadow: "rgba(53, 104, 245, 0.25)",
+
     isDarkMode: false,
   },
+
   dark: {
+    // ─────────────────────────────────────────
     // Surfaces
-    background: "#171311",
-    foreground: "#29201C",
-    surface: "#b95428ff",
-    surfaceSecondary: "#211A17",
-    surfaceSubtle: "#30251F",
-    surfaceHigh: "#3D302A",
-    surfaceAccent: "#4A2B1D",
-    card: "#29201C",
-    cardElevated: "#30251F",
+    // ─────────────────────────────────────────
+
+    background: "#0B1020",
+    foreground: "#121A2B",
+
+    surface: "#151D30",
+    surfaceSecondary: "#1A2338",
+    surfaceSubtle: "#202A40",
+    surfaceHigh: "#26324A",
+    surfaceAccent: "#202F58",
+
+    card: "#151D30",
+    cardElevated: "#1B253A",
+
+    // ─────────────────────────────────────────
     // Brand
-    primary: "#FF6A2A",
+    // ─────────────────────────────────────────
+
+    primary: "#5B82FF",
     primaryText: "#FFFFFF",
-    orangeGlow: "#FF6A2A",
-    orangeTint: "#df724aff",
-    brandOrange: "#FF6A2A",
-    brandOrangeGlow: "#FF6A2A",
+
+    blueGlow: "#7194FF",
+    blueTint: "#202F58",
+
+    brandBlue: "#5B82FF",
+    brandBlueGlow: "#7194FF",
+    // ─────────────────────────────────────────
     // Text
-    text: "#FFF8F2",
-    textSecondary: "#C9BDB6",
-    mutedText: "#b5aaa4ff",
+    // ─────────────────────────────────────────
+
+    text: "#F4F7FF",
+    textSecondary: "#AAB5C9",
+    mutedText: "#78849A",
+
+    // ─────────────────────────────────────────
     // Semantic
-    secondary: "#211A17",
-    secondaryText: "#c4b09eff",
-    muted: "#30251F",
-    popover: "#29201C",
-    popoverText: "#FFF8F2",
+    // ─────────────────────────────────────────
+
+    secondary: "#1A2338",
+    secondaryText: "#E8EDFA",
+
+    muted: "#202A40",
+
+    popover: "#151D30",
+    popoverText: "#F4F7FF",
+
+    // ─────────────────────────────────────────
     // Feedback
-    rating: "#F6B73C",
-    success: "#63C78A",
-    successText: "#171311",
-    warning: "#E57A28",
-    warningText: "#171311",
-    danger: "#FF6467",
+    // ─────────────────────────────────────────
+
+    rating: "#FBBF24",
+
+    success: "#36C994",
+    successText: "#071A12",
+
+    warning: "#FBBF24",
+    warningText: "#1A1300",
+
+    danger: "#FF6B6B",
     dangerText: "#FFFFFF",
+
+    // ─────────────────────────────────────────
     // Borders
-    border: "#3D302A",
-    borderAccent: "#5A453C",
-    borderFocus: "#5A453C",
+    // ─────────────────────────────────────────
+
+    border: "#29344B",
+    borderAccent: "#3B4D78",
+    borderFocus: "#617DD1",
+
+    // ─────────────────────────────────────────
     // Input / Focus
-    input: "#3D302A",
-    ring: "#5A453C",
+    // ─────────────────────────────────────────
+
+    input: "#1A2338",
+    ring: "#617DD1",
+
+    // ─────────────────────────────────────────
     // Utility
-    shadow: "rgba(0, 0, 0, 0.5)",
-    buttonShadow: "rgba(255, 106, 42, 0.32)",
+    // ─────────────────────────────────────────
+
+    shadow: "rgba(0, 0, 0, 0.35)",
+    buttonShadow: "rgba(91, 130, 255, 0.30)",
+
     isDarkMode: true,
   },
 };
@@ -111,5 +194,6 @@ export const useThemeColors = (): ColorsType => {
 
   const isDarkMode =
     theme === "system" ? systemColorScheme === "dark" : theme === "dark";
+
   return isDarkMode ? Colors.dark : Colors.light;
 };

@@ -21,12 +21,12 @@ const LABELS: Record<string, string> = {
 
 export function CustomTabBar({ state, navigation }: BottomTabBarProps) {
   const insets = useSafeAreaInsets();
-  const { foreground, orangeGlow, isDarkMode, border } = useThemeColors();
+  const { foreground, primary, isDarkMode, border } = useThemeColors();
 
   const inactiveColor = isDarkMode ? "#aca19bff" : "#705E54";
   // Active pill bg is slightly off from the tab bar bg so it's visible
   const activePillBg = isDarkMode ? "#3D302A" : "#f9f7f5ff";
-  const activeShadow = isDarkMode ? "#000000" : "#D4784A";
+  const activeShadow = isDarkMode ? "#000000" : "#4a86d4ff";
 
   const getBottom = () => {
     if (Platform.OS === "ios") {
@@ -51,7 +51,7 @@ export function CustomTabBar({ state, navigation }: BottomTabBarProps) {
         const isFocused = state.index === index;
         const Icon = ICONS[route.name] ?? House;
         const label = LABELS[route.name] ?? route.name;
-        const color = isFocused ? orangeGlow : inactiveColor;
+        const color = isFocused ? primary : inactiveColor;
 
         const onPress = () => {
           const event = navigation.emit({

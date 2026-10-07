@@ -80,6 +80,7 @@ export default function RootLayout() {
     "sans-semibold": require("@/assets/fonts/Manrope-SemiBold.ttf"),
     "sans-extrabold": require("@/assets/fonts/Manrope-ExtraBold.ttf"),
     "sans-light": require("@/assets/fonts/Manrope-Light.ttf"),
+    "sans-extraboldItalic": require("@/assets/fonts/PlusJakartaSans-ExtraBoldItalic.ttf"),
   });
 
   // Wait for both fonts and the AsyncStorage check to complete

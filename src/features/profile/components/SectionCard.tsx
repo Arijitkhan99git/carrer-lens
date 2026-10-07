@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { useThemeColors } from "../../../constants/color-pallette";
+import { useThemeColors } from "../../../../constants/color-pallette";
 
 export function SectionCard({ children }: { children: React.ReactNode }) {
   const colors = useThemeColors();

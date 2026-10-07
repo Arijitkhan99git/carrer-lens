@@ -1,5 +1,7 @@
+import Homeheader from "@/features/home/components/Homeheader";
+import HomeSubHeader from "@/features/home/components/HomeSubHeader";
 import { useScreenSafeArea } from "@/hooks/useScreenSafeArea";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function Index() {
   const screenSafeArea = useScreenSafeArea();
@@ -14,7 +16,8 @@ export default function Index() {
           paddingBottom: 100,
         }}
       >
-        <Text>vHVubadhsvdjhs</Text>
+        <Homeheader />
+        <HomeSubHeader />
       </ScrollView>
     </View>
   );
@@ -23,5 +26,16 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  headerWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 16,
+    justifyContent: "space-between",
+  },
+  commonFlexRow: {
+    flexDirection: "row",
+    gap: 20,
+    alignItems: "center",
   },
 });

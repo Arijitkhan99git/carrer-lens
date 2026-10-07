@@ -1,6 +1,6 @@
-import { SectionCard } from "@/features/profile/SectionCard";
-import { SectionHeader } from "@/features/profile/SectionHeader";
-import { SettingsRow } from "@/features/profile/SettingsRow";
+import { SectionCard } from "@/features/profile/components/SectionCard";
+import { SectionHeader } from "@/features/profile/components/SectionHeader";
+import { SettingsRow } from "@/features/profile/components/SettingsRow";
 import { useAtom } from "jotai";
 import { Moon, Palette, Sun } from "lucide-react-native";
 import { StyleSheet, Switch, Text, View } from "react-native";

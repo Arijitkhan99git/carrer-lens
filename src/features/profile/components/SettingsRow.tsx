@@ -1,7 +1,7 @@
 import { AppText } from "@/components/AppText";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { useThemeColors } from "../../../constants/color-pallette";
-import { fonts } from "../../../constants/typography";
+import { useThemeColors } from "../../../../constants/color-pallette";
+import { fonts } from "../../../../constants/typography";
 
 export function SettingsRow({
   icon,
