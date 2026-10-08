@@ -5,5 +5,6 @@ export const fonts = {
   semibold: "sans-semibold",
   extrabold: "sans-extrabold",
   light: "sans-light",
+  boldItalic: "sans-boldItalic",
   extraBoldItalic: "sans-extraboldItalic",
 } as const;

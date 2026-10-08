@@ -19,7 +19,7 @@ export default function HomeSubHeader() {
           <Text
             style={{
               fontSize: 40,
-              fontFamily: fonts.extraBoldItalic,
+              fontFamily: fonts.boldItalic,
               lineHeight: 45,
               fontWeight: 600,
               color: textColor,

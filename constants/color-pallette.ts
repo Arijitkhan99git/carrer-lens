@@ -33,7 +33,7 @@ export const Colors = {
     primaryText: "#FFFFFF",
 
     blueGlow: "#4D7BFF",
-    blueTint: "#E8EEFF",
+    blueTint: "#2e4a95ff",
 
     brandBlue: "#3568F5",
     brandBlueGlow: "#4D7BFF",
