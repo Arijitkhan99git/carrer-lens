@@ -12,7 +12,7 @@ import { StyleSheet } from "react-native";
 export const globalStyles = StyleSheet.create({
   flexRow: {
     flexDirection: "row",
-    gap: 10,
+    gap: 6,
     alignItems: "center",
   },
   flexRowCenter: {
@@ -32,5 +32,12 @@ export const globalStyles = StyleSheet.create({
   center: {
     alignItems: "center",
     justifyContent: "center",
+  },
+  titleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 15,
+    marginBottom: 10,
   },
 });

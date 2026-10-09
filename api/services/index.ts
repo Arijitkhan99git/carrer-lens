@@ -1,9 +1,7 @@
 // api/services/index.ts
 import axios, { type AxiosInstance } from "axios";
-import { BASE_URL } from "../url";
 
 const api: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -14,9 +12,17 @@ const api: AxiosInstance = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Log in dev, surface clean error to callers
     if (__DEV__) {
-      console.warn("[API Error]", error?.response?.status, error?.config?.url);
+      if (error?.response) {
+        // Server responded with a non-2xx status
+        console.warn("[API Error] HTTP", error.response.status, error.config?.url);
+      } else if (error?.request) {
+        // Request was made but no response received (timeout / no internet)
+        console.warn("[API Error] No response (network/timeout):", error.config?.url, error.message);
+      } else {
+        // Something went wrong building the request
+        console.warn("[API Error] Request setup failed:", error.message);
+      }
     }
     return Promise.reject(error);
   },

@@ -11,7 +11,7 @@ interface Profile {
   skills: string[];
   workplace: string;
 }
-interface Match {
+export interface Match {
   id: string;
   company_id: string;
   title: string;
