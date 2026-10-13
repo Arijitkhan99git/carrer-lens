@@ -17,7 +17,8 @@ export const getStoredThemePreference =
         return storedTheme;
       }
       return null;
-    } catch {
+    } catch (error) {
+      console.error("Failed to load stored theme preference", error);
       return null;
     }
   };
@@ -25,7 +26,9 @@ export const getStoredThemePreference =
 export const setStoredThemePreference = async (theme: ThemePreference) => {
   try {
     await AsyncStorage.setItem(CARRERLENS_THEME_KEY, theme);
-  } catch {}
+  } catch (error) {
+    console.error("Failed to save theme preference", error);
+  }
 };
 
 export const themeAtom = atom<ThemePreference | null>(null);

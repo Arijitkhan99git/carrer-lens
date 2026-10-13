@@ -13,7 +13,8 @@ export const getStoredJobPreference =
       const stored = await AsyncStorage.getItem(JOB_PREFERENCE_KEY);
       if (!stored) return null;
       return JSON.parse(stored) as MatchedJobResponse;
-    } catch {
+    } catch (error) {
+      console.error("Failed to load stored job preferences", error);
       return null;
     }
   };
@@ -23,13 +24,17 @@ export const setStoredJobPreference = async (
 ): Promise<void> => {
   try {
     await AsyncStorage.setItem(JOB_PREFERENCE_KEY, JSON.stringify(data));
-  } catch {}
+  } catch (error) {
+    console.error("Failed to save job preferences", error);
+  }
 };
 
 export const clearStoredJobPreference = async (): Promise<void> => {
   try {
     await AsyncStorage.removeItem(JOB_PREFERENCE_KEY);
-  } catch {}
+  } catch (error) {
+    console.error("Failed to clear stored job preferences", error);
+  }
 };
 
 // ─── Jotai Atom ───────────────────────────────────────────────────────────

@@ -8,10 +8,14 @@ import * as Network from "expo-network";
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useAtom } from "jotai";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useThemeColors } from "../../constants/color-pallette";
+import {
+  getStoredJobPreference,
+  jobPreferenceAtom,
+} from "../../store/jobPreference-store";
 import { getStoredSavedIds, savedIdsAtom } from "../../store/saved-store";
 import { getStoredThemePreference, themeAtom } from "../../store/theme-store";
 
@@ -48,25 +52,32 @@ export default function RootLayout() {
   const queryClient = new QueryClient();
 
   const [, setTheme] = useAtom(themeAtom);
+  const [, setJobPreference] = useAtom(jobPreferenceAtom);
+  const [, setSavedIds] = useAtom(savedIdsAtom);
+  const [persistedStateHydrated, setPersistedStateHydrated] = useState(false);
   const colors = useThemeColors();
 
-  // Runs once on app launch — reads persisted preference and initialises the atom
+  // Restore persisted state before showing screens that consume these atoms.
   useEffect(() => {
-    (async () => {
-      const stored = await getStoredThemePreference();
-      setTheme(stored ?? (Platform.OS === "ios" ? "system" : "light"));
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    let isMounted = true;
 
-  //   Synchronous atom holding saved recipe IDs.
-  //  Hydrate once on app mount:
+    Promise.all([
+      getStoredThemePreference(),
+      getStoredJobPreference(),
+      getStoredSavedIds(),
+    ]).then(([storedTheme, storedJobPreference, storedSavedIds]) => {
+      if (!isMounted) return;
 
-  const [, setSavedIds] = useAtom(savedIdsAtom);
+      setTheme(storedTheme ?? (Platform.OS === "ios" ? "system" : "light"));
+      setJobPreference(storedJobPreference);
+      setSavedIds(storedSavedIds);
+      setPersistedStateHydrated(true);
+    });
 
-  useEffect(() => {
-    getStoredSavedIds().then(setSavedIds);
-  }, []);
+    return () => {
+      isMounted = false;
+    };
+  }, [setJobPreference, setSavedIds, setTheme]);
 
   const navigationTheme = useMemo(() => {
     const base = colors.isDarkMode ? DarkTheme : DefaultTheme;
@@ -94,8 +105,7 @@ export default function RootLayout() {
     "sans-extraboldItalic": require("@/assets/fonts/PlusJakartaSans-ExtraBoldItalic.ttf"),
   });
 
-  // Wait for both fonts and the AsyncStorage check to complete
-  if (!fontsLoaded) return null;
+  if (!fontsLoaded || !persistedStateHydrated) return null;
 
   // Show welcome screen on first launch
 

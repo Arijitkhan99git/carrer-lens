@@ -18,27 +18,27 @@ import {
   themeAtom,
 } from "../../../store/theme-store";
 
-export default function profile() {
+export default function Profile() {
   const colors = useThemeColors();
-  const [theme, setTheme] = useAtom(themeAtom);
+  const [, setTheme] = useAtom(themeAtom);
   const isDark = colors.isDarkMode;
   const setJobPreference = useSetAtom(jobPreferenceAtom);
 
   const mutateAsync = useMutation({
     mutationFn: fetchMatchedJobs,
-    onSuccess(response) {
+    async onSuccess(response) {
       // Store in Jotai atom (in-memory)
       setJobPreference(response);
       // Persist to AsyncStorage (survives app restarts)
-      setStoredJobPreference(response);
+      await setStoredJobPreference(response);
       console.log(response.total_matches);
     },
   });
 
-  const toggleTheme = () => {
-    const next = isDark ? "light" : "dark";
+  const toggleTheme = async (enabled: boolean) => {
+    const next = enabled ? "dark" : "light";
     setTheme(next);
-    setStoredThemePreference(next);
+    await setStoredThemePreference(next);
   };
 
   const handlePreferences = () => {

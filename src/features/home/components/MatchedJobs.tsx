@@ -1,33 +1,18 @@
 import { AppText } from "@/components/AppText";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useRouter } from "expo-router";
-import { useAtom } from "jotai";
-import { useEffect } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { useAtomValue } from "jotai";
+import { Pressable, View } from "react-native";
 import { useThemeColors } from "../../../../constants/color-pallette";
 import { globalStyles } from "../../../../constants/styles";
-import {
-  getStoredJobPreference,
-  jobPreferenceAtom,
-} from "../../../../store/jobPreference-store";
+import { jobPreferenceAtom } from "../../../../store/jobPreference-store";
 import RecommendedCard from "./RecommendedCard";
 
 export default function MatchedJobs() {
   const router = useRouter();
   const { primary } = useThemeColors();
 
-  // useAtom returns a [value, setter] tuple — same as useState
-  const [jobPreference, setJobPreference] = useAtom(jobPreferenceAtom);
-
-  // Hydrate the atom from AsyncStorage on first mount
-  useEffect(() => {
-    if (jobPreference !== null) return; // already set by profile screen
-    getStoredJobPreference().then((stored) => {
-      if (stored) {
-        setJobPreference(stored);
-      }
-    });
-  }, []);
+  const jobPreference = useAtomValue(jobPreferenceAtom);
 
   return (
     <View>
@@ -48,4 +33,3 @@ export default function MatchedJobs() {
   );
 }
 
-const styles = StyleSheet.create({});
