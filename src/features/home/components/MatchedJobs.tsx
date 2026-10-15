@@ -25,11 +25,10 @@ export default function MatchedJobs() {
       </View>
 
       <View style={{ gap: 12, paddingVertical: 4 }}>
-        {jobPreference?.matches.slice(0, 3).map((item) => (
+        {jobPreference?.matches.slice(0, 6).map((item) => (
           <RecommendedCard key={item.id} item={item} />
         ))}
       </View>
     </View>
   );
 }
-

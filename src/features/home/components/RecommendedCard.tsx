@@ -21,7 +21,7 @@ export default function RecommendedCard({ item }: { item: Match }) {
       <View style={[globalStyles.flexRow, { alignSelf: "flex-end" }]}>
         <NormalBadge
           badgeTitle={`${item?.match_score}% Match`}
-          lightBgColor="#e2fee9ff"
+          lightBgColor="#e2fbfeff"
         />
         <CommonBookmark jobId={item.id} />
       </View>

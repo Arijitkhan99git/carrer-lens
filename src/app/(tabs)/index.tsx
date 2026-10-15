@@ -1,6 +1,7 @@
 import Homeheader from "@/features/home/components/Homeheader";
 import HomeSubHeader from "@/features/home/components/HomeSubHeader";
 import MatchedJobs from "@/features/home/components/MatchedJobs";
+import TrendingSkills from "@/features/home/components/TrendingSkills";
 import WelcomeCard from "@/features/home/components/WelcomeCard";
 import { useScreenSafeArea } from "@/hooks/useScreenSafeArea";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -21,6 +22,7 @@ export default function Index() {
         <Homeheader />
         <HomeSubHeader />
         <WelcomeCard />
+        <TrendingSkills />
         <MatchedJobs />
       </ScrollView>
     </View>

@@ -16,7 +16,7 @@ type BadgeProps = {
 
 const NormalBadge = ({
   badgeTitle,
-  lightBgColor = "#d9fea7ff",
+  lightBgColor = "#a7e5feff",
   darkBgColor,
   fontFamily = fonts.semibold,
   textColor,

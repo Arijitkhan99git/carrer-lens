@@ -13,7 +13,7 @@ export const Colors = {
     // Surfaces
     // ─────────────────────────────────────────
 
-    background: "#F7F9FF",
+    background: "#eff2fcff",
     foreground: "#FFFFFF",
 
     surface: "#FFFFFF",
@@ -42,8 +42,8 @@ export const Colors = {
     // Text
     // ─────────────────────────────────────────
 
-    text: "#172554",
-    textSecondary: "#64748B",
+    text: "#1b2c64ff",
+    textSecondary: "#57667bff",
     mutedText: "#94A3B8",
 
     // ─────────────────────────────────────────
