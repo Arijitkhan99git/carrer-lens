@@ -2,8 +2,9 @@ import { AppText } from "@/components/AppText";
 import CommonBookmark from "@/components/CommonBookmark";
 import NormalBadge from "@/components/NormalBadge";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import { Banknote, BriefcaseBusiness } from "lucide-react-native";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Match } from "../../../../api/model/matchedJob-model";
 import { useThemeColors } from "../../../../constants/color-pallette";
 import { useGenericShadow } from "../../../../constants/genericShadowStyle";
@@ -11,12 +12,17 @@ import { globalStyles } from "../../../../constants/styles";
 import { fonts } from "../../../../constants/typography";
 
 export default function RecommendedCard({ item }: { item: Match }) {
+  const router = useRouter();
+
   const shadowStyle = useGenericShadow(1);
 
   const { text: textColor, muted } = useThemeColors();
 
   return (
-    <View style={[shadowStyle, styles.jobcard]}>
+    <Pressable
+      onPress={() => router.push(`/jobDetails/${item.id}` as any)}
+      style={[shadowStyle, styles.jobcard]}
+    >
       {/* match percentage and bookmark */}
       <View style={[globalStyles.flexRow, { alignSelf: "flex-end" }]}>
         <NormalBadge
@@ -164,7 +170,7 @@ export default function RecommendedCard({ item }: { item: Match }) {
           </View>
         )}
       </View>
-    </View>
+    </Pressable>
   );
 }
 

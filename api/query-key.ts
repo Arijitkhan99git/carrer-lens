@@ -1,5 +1,9 @@
 import { createExtendedQueryKeys } from "./query-key-factory";
 
-export const fetchQueryKey = createExtendedQueryKeys("home", {
+export const homeQueryKey = createExtendedQueryKeys("home", {
   trendingSkills: () => ["home", "trendingSkills"] as const,
+});
+
+export const jobQueryKey = createExtendedQueryKeys("job", {
+  jobDetails: (id: string) => ["job", "jobDetails", id] as const,
 });
