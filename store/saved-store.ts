@@ -25,24 +25,25 @@ export const setStoredSavedIds = async (ids: string[]): Promise<void> => {
 // ─── Atoms ─────────────────────────────────────────────────────────────────
 
 /**
- * Synchronous atom holding saved recipe IDs.
- * Hydrate once on app mount:
- *
- *   const [, setSavedIds] = useAtom(savedIdsAtom);
- *   useEffect(() => { getStoredSavedIds().then(setSavedIds); }, []);
+ * Synchronous atom holding saved job IDs.
+ * Hydrated on app mount in _layout.tsx
  */
 export const savedIdsAtom = atom<string[]>([]);
 
-/** Read-only derived atom – true if the given meal is saved. */
+/** Read-only derived atom – true if the given job is saved */
 export const isSavedAtom = (jobId: string) =>
   atom((get) => get(savedIdsAtom).includes(jobId));
 
-/** Write atom – toggles a meal and auto-persists to AsyncStorage. */
-export const toggleSavedAtom = atom(null, (get, set, jobId: string) => {
-  const current = get(savedIdsAtom);
-  const next = current.includes(jobId)
-    ? current.filter((id) => id !== jobId)
-    : [...current, jobId];
-  set(savedIdsAtom, next);
-  setStoredSavedIds(next);
-});
+/** Write atom – toggles a job ID and auto-persists to AsyncStorage */
+export const toggleSavedAtom = atom(
+  null,
+  (get, set, payload: string | { jobId: string }) => {
+    const jobId = typeof payload === "string" ? payload : payload.jobId;
+    const current = get(savedIdsAtom);
+    const next = current.includes(jobId)
+      ? current.filter((id) => id !== jobId)
+      : [jobId, ...current];
+    set(savedIdsAtom, next);
+    setStoredSavedIds(next);
+  },
+);

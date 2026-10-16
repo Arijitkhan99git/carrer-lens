@@ -31,6 +31,7 @@ export const initialSearchFilterState: SearchFilterState = {
   jobType: "all",
 };
 
+// ── Search Tab Atoms ───────────────────────────────────────────────
 export const searchFilterAtom = atom<SearchFilterState>(
   initialSearchFilterState,
 );
@@ -47,4 +48,23 @@ export const activeFilterCountAtom = atom((get) => {
 
 export const resetSearchFilterAtom = atom(null, (_get, set) => {
   set(searchFilterAtom, initialSearchFilterState);
+});
+
+// ── Saved Tab Atoms ────────────────────────────────────────────────
+export const savedFilterAtom = atom<SearchFilterState>(
+  initialSearchFilterState,
+);
+
+export const activeSavedFilterCountAtom = atom((get) => {
+  const filters = get(savedFilterAtom);
+  let count = 0;
+  if (filters.salaryMin !== undefined && filters.salaryMin > 0) count++;
+  if (filters.workplace !== "all") count++;
+  if (filters.level !== "all") count++;
+  if (filters.jobType !== "all") count++;
+  return count;
+});
+
+export const resetSavedFilterAtom = atom(null, (_get, set) => {
+  set(savedFilterAtom, initialSearchFilterState);
 });

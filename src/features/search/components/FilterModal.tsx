@@ -1,14 +1,8 @@
 import { AppText } from "@/components/AppText";
 import { useAtom, useSetAtom } from "jotai";
 import { Check, RotateCcw, X } from "lucide-react-native";
-import React, { useState } from "react";
-import {
-  Modal,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
+import { useState } from "react";
+import { Modal, Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useThemeColors } from "../../../../constants/color-pallette";
 import { fonts } from "../../../../constants/typography";
@@ -25,6 +19,8 @@ import {
 interface FilterModalProps {
   visible: boolean;
   onClose: () => void;
+  filterAtom?: typeof searchFilterAtom;
+  resetAtom?: typeof resetSearchFilterAtom;
 }
 
 const SALARY_PRESETS = [
@@ -165,9 +161,7 @@ function FilterModalSheet({
                       styles.chipText,
                       {
                         color: isSelected ? primaryText : textColor,
-                        fontFamily: isSelected
-                          ? fonts.semibold
-                          : fonts.medium,
+                        fontFamily: isSelected ? fonts.semibold : fonts.medium,
                       },
                     ]}
                   >
@@ -216,9 +210,7 @@ function FilterModalSheet({
                       styles.chipText,
                       {
                         color: isSelected ? primaryText : textColor,
-                        fontFamily: isSelected
-                          ? fonts.semibold
-                          : fonts.medium,
+                        fontFamily: isSelected ? fonts.semibold : fonts.medium,
                       },
                     ]}
                   >
@@ -267,9 +259,7 @@ function FilterModalSheet({
                       styles.chipText,
                       {
                         color: isSelected ? primaryText : textColor,
-                        fontFamily: isSelected
-                          ? fonts.semibold
-                          : fonts.medium,
+                        fontFamily: isSelected ? fonts.semibold : fonts.medium,
                       },
                     ]}
                   >
@@ -318,9 +308,7 @@ function FilterModalSheet({
                       styles.chipText,
                       {
                         color: isSelected ? primaryText : textColor,
-                        fontFamily: isSelected
-                          ? fonts.semibold
-                          : fonts.medium,
+                        fontFamily: isSelected ? fonts.semibold : fonts.medium,
                       },
                     ]}
                   >
@@ -380,9 +368,14 @@ function FilterModalSheet({
   );
 }
 
-export default function FilterModal({ visible, onClose }: FilterModalProps) {
-  const [activeFilters, setActiveFilters] = useAtom(searchFilterAtom);
-  const resetFilters = useSetAtom(resetSearchFilterAtom);
+export default function FilterModal({
+  visible,
+  onClose,
+  filterAtom = searchFilterAtom,
+  resetAtom = resetSearchFilterAtom,
+}: FilterModalProps) {
+  const [activeFilters, setActiveFilters] = useAtom(filterAtom);
+  const resetFilters = useSetAtom(resetAtom);
 
   return (
     <Modal

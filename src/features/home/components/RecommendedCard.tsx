@@ -12,7 +12,9 @@ import { useGenericShadow } from "../../../../constants/genericShadowStyle";
 import { globalStyles } from "../../../../constants/styles";
 import { fonts } from "../../../../constants/typography";
 
-export type JobCardData = (Match | JobItem) & {
+import { JobDescriptionResponse } from "../../../../api/model/jobDescription-model";
+
+export type JobCardData = (Match | JobItem | JobDescriptionResponse) & {
   match_score?: number;
 };
 
