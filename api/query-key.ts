@@ -6,4 +6,6 @@ export const homeQueryKey = createExtendedQueryKeys("home", {
 
 export const jobQueryKey = createExtendedQueryKeys("job", {
   jobDetails: (id: string) => ["job", "jobDetails", id] as const,
+  similarJobs: (id: string) => ["job", "similarJobs", id] as const,
 });
+
