@@ -119,8 +119,8 @@ export function CustomTabBar({ state, navigation }: BottomTabBarProps) {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    left: 20,
-    right: 20,
+    left: 15,
+    right: 15,
     flexDirection: "row",
     alignItems: "center",
     height: 70,

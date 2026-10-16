@@ -16,6 +16,10 @@ import {
   getStoredJobPreference,
   jobPreferenceAtom,
 } from "../../store/jobPreference-store";
+import {
+  getStoredProfile,
+  profileAtom,
+} from "../../store/profileData-store";
 import { getStoredSavedIds, savedIdsAtom } from "../../store/saved-store";
 import { getStoredThemePreference, themeAtom } from "../../store/theme-store";
 
@@ -54,6 +58,7 @@ export default function RootLayout() {
   const [, setTheme] = useAtom(themeAtom);
   const [, setJobPreference] = useAtom(jobPreferenceAtom);
   const [, setSavedIds] = useAtom(savedIdsAtom);
+  const [, setProfile] = useAtom(profileAtom);
   const [persistedStateHydrated, setPersistedStateHydrated] = useState(false);
   const colors = useThemeColors();
 
@@ -65,19 +70,30 @@ export default function RootLayout() {
       getStoredThemePreference(),
       getStoredJobPreference(),
       getStoredSavedIds(),
-    ]).then(([storedTheme, storedJobPreference, storedSavedIds]) => {
-      if (!isMounted) return;
+      getStoredProfile(),
+    ]).then(
+      ([
+        storedTheme,
+        storedJobPreference,
+        storedSavedIds,
+        storedProfile,
+      ]) => {
+        if (!isMounted) return;
 
-      setTheme(storedTheme ?? (Platform.OS === "ios" ? "system" : "light"));
-      setJobPreference(storedJobPreference);
-      setSavedIds(storedSavedIds);
-      setPersistedStateHydrated(true);
-    });
+        setTheme(storedTheme ?? (Platform.OS === "ios" ? "system" : "light"));
+        setJobPreference(storedJobPreference);
+        setSavedIds(storedSavedIds);
+        if (storedProfile) {
+          setProfile(storedProfile);
+        }
+        setPersistedStateHydrated(true);
+      },
+    );
 
     return () => {
       isMounted = false;
     };
-  }, [setJobPreference, setSavedIds, setTheme]);
+  }, [setJobPreference, setProfile, setSavedIds, setTheme]);
 
   const navigationTheme = useMemo(() => {
     const base = colors.isDarkMode ? DarkTheme : DefaultTheme;
