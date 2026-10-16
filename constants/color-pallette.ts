@@ -95,6 +95,14 @@ export const Colors = {
     shadow: "rgba(37, 76, 160, 0.08)",
     buttonShadow: "rgba(53, 104, 245, 0.25)",
 
+    // Chart & Market Colors
+    chartBlue: "#3568F5",
+    chartSky: "#60A5FA",
+    chartLightBlue: "#BFDBFE",
+    chartTrack: "#EEF2FF",
+    badgeGreenBg: "#E6F8EF",
+    badgeGreenText: "#18A874",
+
     isDarkMode: false,
   },
 
@@ -183,6 +191,14 @@ export const Colors = {
 
     shadow: "rgba(0, 0, 0, 0.35)",
     buttonShadow: "rgba(91, 130, 255, 0.30)",
+
+    // Chart & Market Colors
+    chartBlue: "#5B82FF",
+    chartSky: "#7194FF",
+    chartLightBlue: "#3B4E7A",
+    chartTrack: "#202A40",
+    badgeGreenBg: "rgba(54, 201, 148, 0.15)",
+    badgeGreenText: "#36C994",
 
     isDarkMode: true,
   },

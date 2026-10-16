@@ -1,5 +1,12 @@
 import { BottomTabBarProps } from "expo-router/build/react-navigation/bottom-tabs";
-import { Bookmark, House, LucideIcon, Search, User } from "lucide-react-native";
+import {
+  Bookmark,
+  ChartLine,
+  House,
+  LucideIcon,
+  Search,
+  User,
+} from "lucide-react-native";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useThemeColors } from "../../constants/color-pallette";
@@ -9,6 +16,7 @@ const ICONS: Record<string, LucideIcon> = {
   index: House,
   search: Search,
   saved: Bookmark,
+  market: ChartLine,
   profile: User,
 };
 
@@ -16,6 +24,7 @@ const LABELS: Record<string, string> = {
   index: "Home",
   search: "Search",
   saved: "Saved",
+  market: "Market",
   profile: "Profile",
 };
 
