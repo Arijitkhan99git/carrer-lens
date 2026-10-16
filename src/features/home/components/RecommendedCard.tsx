@@ -5,29 +5,55 @@ import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import { Banknote, BriefcaseBusiness } from "lucide-react-native";
 import { Pressable, StyleSheet, View } from "react-native";
+import { JobItem } from "../../../../api/model/job-model";
 import { Match } from "../../../../api/model/matchedJob-model";
 import { useThemeColors } from "../../../../constants/color-pallette";
 import { useGenericShadow } from "../../../../constants/genericShadowStyle";
 import { globalStyles } from "../../../../constants/styles";
 import { fonts } from "../../../../constants/typography";
 
-export default function RecommendedCard({ item }: { item: Match }) {
+export type JobCardData = (Match | JobItem) & {
+  match_score?: number;
+};
+
+// Deterministic random match % (75-99%) so renders remain pure
+function getDeterministicMatchScore(id?: string): number {
+  if (!id) return 88;
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = (hash << 5) - hash + id.charCodeAt(i);
+    hash |= 0;
+  }
+  return (Math.abs(hash) % 25) + 75;
+}
+
+function formatSalary(min?: number, max?: number): string {
+  if (!min && !max) return "Not disclosed";
+  const toK = (val: number) =>
+    val >= 1000 ? `${Math.round(val / 1000)}K` : `${val}K`;
+  if (min && max) return `$${toK(min)} – $${toK(max)}`;
+  if (min) return `From $${toK(min)}`;
+  return `Up to $${toK(max!)}`;
+}
+
+export default function RecommendedCard({ item }: { item: JobCardData }) {
   const router = useRouter();
-
   const shadowStyle = useGenericShadow(1);
+  const { text: textColor, card, muted, textSecondary } = useThemeColors();
 
-  const { text: textColor, muted } = useThemeColors();
+  const matchScore = item?.match_score ?? getDeterministicMatchScore(item.id);
 
   return (
     <Pressable
       onPress={() => router.push(`/jobDetails/${item.id}` as any)}
-      style={[shadowStyle, styles.jobcard]}
+      style={[shadowStyle, styles.jobcard, { backgroundColor: card }]}
     >
       {/* match percentage and bookmark */}
       <View style={[globalStyles.flexRow, { alignSelf: "flex-end" }]}>
         <NormalBadge
-          badgeTitle={`${item?.match_score}% Match`}
-          lightBgColor="#e2fbfeff"
+          badgeTitle={`${matchScore}% Match`}
+          lightBgColor="#d1fddfff"
+          lightTextColor="#18A874"
         />
         <CommonBookmark jobId={item.id} />
       </View>
@@ -42,7 +68,7 @@ export default function RecommendedCard({ item }: { item: Match }) {
         />
 
         {/* Company Name + Title + Location + Experience */}
-        <View style={{ gap: 4 }}>
+        <View style={{ gap: 4, flex: 1 }}>
           <AppText
             numberOfLines={2}
             style={{
@@ -55,26 +81,41 @@ export default function RecommendedCard({ item }: { item: Match }) {
             {item.title}
           </AppText>
 
-          <View style={{ flexDirection: "row", gap: 6, alignItems: "center" }}>
-            <AppText style={{ color: "gray" }}>{item.company_name}</AppText>
-            <View
-              style={{
-                width: 4,
-                height: 4,
-                borderRadius: 4,
-                backgroundColor: "gray",
-              }}
-            />
-            <AppText style={{ color: "gray" }}>{item.location}</AppText>
-            <View
-              style={{
-                width: 4,
-                height: 4,
-                borderRadius: 4,
-                backgroundColor: "gray",
-              }}
-            />
-            <AppText style={{ color: "gray" }}>{item.experience_level}</AppText>
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 6,
+              alignItems: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            {item.company_name ? (
+              <AppText style={{ color: textSecondary, fontSize: 13 }}>
+                {item.company_name}
+              </AppText>
+            ) : null}
+            {item.location ? (
+              <>
+                <View style={styles.dot} />
+                <AppText style={{ color: textSecondary, fontSize: 13 }}>
+                  {item.location}
+                </AppText>
+              </>
+            ) : null}
+            {item.experience_level ? (
+              <>
+                <View style={styles.dot} />
+                <AppText
+                  style={{
+                    color: textSecondary,
+                    fontSize: 13,
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {item.experience_level}
+                </AppText>
+              </>
+            ) : null}
           </View>
         </View>
       </View>
@@ -83,34 +124,37 @@ export default function RecommendedCard({ item }: { item: Match }) {
         style={{
           flexDirection: "row",
           alignItems: "center",
-          gap: 12,
+          gap: 14,
           marginLeft: 6,
           marginTop: 12,
         }}
       >
         {/* Salary */}
         <View style={styles.statsContainer}>
-          <Banknote size={20} color={"gray"} />
+          <Banknote size={18} color={textSecondary} />
           <AppText
             style={{
               fontFamily: fonts.medium,
               color: textColor,
+              fontSize: 13,
             }}
           >
-            {item.salary_min + "K " + `-` + " " + item.salary_max + "K"}
+            {formatSalary(item.salary_min, item.salary_max)}
           </AppText>
         </View>
 
-        {/* experience */}
+        {/* Experience / Job Type */}
         <View style={styles.statsContainer}>
-          <BriefcaseBusiness size={16} color={"gray"} />
+          <BriefcaseBusiness size={16} color={textSecondary} />
           <AppText
             style={{
               fontFamily: fonts.medium,
               color: textColor,
+              fontSize: 13,
+              textTransform: "capitalize",
             }}
           >
-            {item.job_type}
+            {item.job_type ?? item.workplace ?? "Full-time"}
           </AppText>
         </View>
       </View>
@@ -121,7 +165,8 @@ export default function RecommendedCard({ item }: { item: Match }) {
           flexDirection: "row",
           flexWrap: "wrap",
           gap: 8,
-          marginTop: 16,
+          marginTop: 14,
+          alignItems: "center",
         }}
       >
         {item?.tags?.slice(0, 3)?.map((tag) => {
@@ -130,8 +175,8 @@ export default function RecommendedCard({ item }: { item: Match }) {
               key={tag}
               style={{
                 backgroundColor: muted,
-                paddingHorizontal: 7,
-                paddingVertical: 3,
+                paddingHorizontal: 8,
+                paddingVertical: 4,
                 borderRadius: 8,
               }}
             >
@@ -148,13 +193,12 @@ export default function RecommendedCard({ item }: { item: Match }) {
           );
         })}
 
-        {/* items.tags && item.tags.length > 3 */}
         {item?.tags && item.tags.length > 3 && (
           <View
             style={{
               backgroundColor: muted,
-              paddingHorizontal: 7,
-              paddingVertical: 3,
+              paddingHorizontal: 8,
+              paddingVertical: 4,
               borderRadius: 8,
             }}
           >
@@ -177,21 +221,27 @@ export default function RecommendedCard({ item }: { item: Match }) {
 const styles = StyleSheet.create({
   jobcard: {
     borderRadius: 20,
-    paddingHorizontal: 12,
-    paddingTop: 10,
+    paddingHorizontal: 14,
+    paddingTop: 12,
     paddingBottom: 16,
-    backgroundColor: "#fff",
     overflow: "hidden",
   },
   companyLogo: {
-    width: 50,
-    height: 50,
-    borderRadius: 10,
+    width: 48,
+    height: 48,
+    borderRadius: 12,
     overflow: "hidden",
+    backgroundColor: "#f1f3f9",
   },
   statsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 4,
+    gap: 5,
+  },
+  dot: {
+    width: 3.5,
+    height: 3.5,
+    borderRadius: 3.5,
+    backgroundColor: "gray",
   },
 });
